@@ -1,10 +1,7 @@
-import Navigation from '../../components/navigation';
-
 export default function AboutUs() {
   return (
-    <>
-      <Navigation />
+    <div>
       <h1>ABOUTUS</h1>
-    </>
+    </div>
   );
 }
