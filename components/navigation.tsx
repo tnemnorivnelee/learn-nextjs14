@@ -9,8 +9,6 @@ export default function Navigation() {
 
   const [count, setCount] = useState(0);
 
-  console.log('hello');
-
   return (
     <nav>
       <ul>

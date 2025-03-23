@@ -1,3 +1,7 @@
+export const metadata = {
+  title: 'NOT FOUND',
+};
+
 export default function NotFound() {
   return (
     <>
