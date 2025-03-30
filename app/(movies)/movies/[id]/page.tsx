@@ -1,5 +1,5 @@
-import console from 'console';
-import { API_URL } from '../../../(home)/page';
+import console from "console";
+import { API_URL } from "../../../(home)/page";
 
 async function getMovie(id: string) {
   console.log(`Fetching movie : ${Date.now()}`);
@@ -20,9 +20,9 @@ export default async function MovieDetail({
 }: {
   params: { id: string };
 }) {
-  console.log('======================');
-  console.log('start fetching movie detail');
+  console.log("======================");
+  console.log("start fetching movie detail");
   const [movie, videos] = await Promise.all([getMovie(id), getVideos(id)]);
-  console.log('end fetching movie detail');
+  console.log("end fetching movie detail");
   return <h1>{movie.title}</h1>;
 }
