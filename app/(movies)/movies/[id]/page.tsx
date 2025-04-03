@@ -1,28 +1,22 @@
-import console from "console";
-import { API_URL } from "../../../(home)/page";
-
-async function getMovie(id: string) {
-  console.log(`Fetching movie : ${Date.now()}`);
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  const response = await fetch(`${API_URL}/${id}`);
-  return response.json();
-}
-
-async function getVideos(id: string) {
-  console.log(`Fetching movie : ${Date.now()}`);
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  const response = await fetch(`${API_URL}/${id}/videos`);
-  return response.json();
-}
+import { Suspense } from 'react'; //
+import MovieInfo from '../../../../components/movie-info';
+import MovieVideos from '../../../../components/movie-videos';
 
 export default async function MovieDetail({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  console.log("======================");
-  console.log("start fetching movie detail");
-  const [movie, videos] = await Promise.all([getMovie(id), getVideos(id)]);
-  console.log("end fetching movie detail");
-  return <h1>{movie.title}</h1>;
+  return (
+    <div>
+      {/* Suspense 는 React 18 부터 도입된 기능으로, 비동기 컴포넌트를 렌더링할 때 로딩 상태를 처리하는데 사용됩니다.
+      MovieInfo와 MovieVideos 컴포넌트가 비동기적으로 데이터를 가져오는 동안 로딩 상태를 표시합니다. */}
+      <Suspense fallback={<h2>Loading movie info</h2>}>
+        <MovieInfo id={id} />
+      </Suspense>
+      <Suspense fallback={<h2>Loading movie videos</h2>}>
+        <MovieVideos id={id} />
+      </Suspense>
+    </div>
+  );
 }
