@@ -1,12 +1,21 @@
 import { Suspense } from 'react'; //
-import MovieInfo from '../../../../components/movie-info';
+import MovieInfo, { getMovie } from '../../../../components/movie-info';
 import MovieVideos from '../../../../components/movie-videos';
+
+interface IParams {
+  params: { id: string; };
+}
+
+export async function generateMetadata({ params: { id } }: IParams) {
+  const movie = await getMovie(id);
+  return {
+    title: movie.title,
+  };
+};
 
 export default async function MovieDetail({
   params: { id },
-}: {
-  params: { id: string };
-}) {
+}: IParams) {
   return (
     <div>
       {/* Suspense 는 React 18 부터 도입된 기능으로, 비동기 컴포넌트를 렌더링할 때 로딩 상태를 처리하는데 사용됩니다.
