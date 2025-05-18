@@ -1,29 +1,29 @@
-import { Suspense } from 'react'; //
-import MovieInfo, { getMovie } from '../../../../components/movie-info';
-import MovieVideos from '../../../../components/movie-videos';
+import { Suspense } from "react";
+import MovieInfo, { getMovie } from "../../../../components/movie-info";
+import MovieVideos from "../../../../components/movie-videos";
 
 interface IParams {
-  params: { id: string; };
+  params: Promise<{ id: string; }>;
 }
 
-export async function generateMetadata({ params: { id } }: IParams) {
-  const movie = await getMovie(id);
+export async function generateMetadata({ params }: IParams) {
+  const resolvedParams = await params;
+  const movie = await getMovie(resolvedParams.id);
   return {
     title: movie.title,
   };
-};
+}
 
-export default async function MovieDetail({
-  params: { id },
-}: IParams) {
+export default async function MovieDetailPage({ params }: IParams) {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+
   return (
     <div>
-      {/* Suspense 는 React 18 부터 도입된 기능으로, 비동기 컴포넌트를 렌더링할 때 로딩 상태를 처리하는데 사용됩니다.
-      MovieInfo와 MovieVideos 컴포넌트가 비동기적으로 데이터를 가져오는 동안 로딩 상태를 표시합니다. */}
-      <Suspense fallback={<h2>Loading movie info</h2>}>
+      <Suspense fallback={<h1>Loading movie info</h1>}>
         <MovieInfo id={id} />
       </Suspense>
-      <Suspense fallback={<h2>Loading movie videos</h2>}>
+      <Suspense fallback={<h1>Loading movie videos</h1>}>
         <MovieVideos id={id} />
       </Suspense>
     </div>
